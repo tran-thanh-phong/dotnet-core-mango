@@ -17,8 +17,6 @@ namespace Mango.Services.ShoppingCartAPI.Repository
             _mapper = mapper;
         }
 
-
-
         public async Task<bool> ClearCart(string userId)
         {
             var cartHeaderFromDb = await _db.CartHeaders.FirstOrDefaultAsync(u => u.UserId == userId);
@@ -101,10 +99,17 @@ namespace Mango.Services.ShoppingCartAPI.Repository
                 CartHeader = await _db.CartHeaders.FirstOrDefaultAsync(u => u.UserId == userId)
             };
 
-            cart.CartDetails = _db.CartDetails
-                .Where(u => u.CartHeaderId == cart.CartHeader.CartHeaderId).Include(u=>u.Product);
+            if (cart.CartHeader != null)
+            {
+                cart.CartDetails = _db.CartDetails
+                    .Where(u => u.CartHeaderId == cart.CartHeader.CartHeaderId)
+                    .Include(u => u.Product)
+                    .ToList();
+            }
+            
+            var cartDto = _mapper.Map<CartDto>(cart);
 
-            return _mapper.Map<CartDto>(cart);
+            return cartDto;
         }
 
         public async Task<bool> RemoveFromCart(int cartDetailsId)
