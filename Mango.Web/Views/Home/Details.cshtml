@@ -1,6 +1,6 @@
 ﻿@model Mango.Web.Models.ProductDto
 
-<form>
+<form method="post">
     <input asp-for="ProductId" hidden />
     <div class=" pt-4">
         <div class="card container" style="border:1px solid #808080;">
@@ -41,8 +41,6 @@
                     <a class="btn btn-success btn-square form-control btn-lg" style="height:50px;">Back to List</a>
                 </div>
                 <div class="col-12 col-md-6 ">
-
-
                     <button type="submit" class="btn btn-primary form-control btn-lg" style="height:50px;">Add to Cart</button>
                 </div>
             </div>
