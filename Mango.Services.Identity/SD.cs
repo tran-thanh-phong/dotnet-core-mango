@@ -32,15 +32,15 @@ namespace Mango.Services.Identity
                     ClientId="client",
                     ClientSecrets= { new Secret("secret".Sha256())},
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    AllowedScopes={ "read", "write","profile"}
+                    AllowedScopes={ "read", "write", "profile"}
                 },
                 new Client
                 {
                     ClientId="mango",
                     ClientSecrets= { new Secret("secret".Sha256())},
                     AllowedGrantTypes = GrantTypes.Code,
-                    RedirectUris={ "https://localhost:44378/signin-oidc" },
-                    PostLogoutRedirectUris={"https://localhost:44378/signout-callback-oidc" },
+                    RedirectUris={ "https://localhost:7212/signin-oidc" },
+                    PostLogoutRedirectUris={"https://localhost:7212/signout-callback-oidc" },
                     AllowedScopes=new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
