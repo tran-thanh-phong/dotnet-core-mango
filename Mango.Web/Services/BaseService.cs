@@ -10,11 +10,13 @@ namespace Mango.Web.Services
     {
         public ResponseDto responseModel { get; set; }
         public IHttpClientFactory HttpClient { get; protected set; }
+        protected readonly ILogger _logger;
 
-        public BaseService(IHttpClientFactory httpClient)
+        public BaseService(IHttpClientFactory httpClient, ILogger logger)
         {
             this.responseModel = new ResponseDto();
             this.HttpClient = httpClient;
+            _logger = logger;
         }
 
         public async Task<T> SendAsync<T>(ApiRequest apiRequest)
@@ -56,6 +58,9 @@ namespace Mango.Web.Services
                 apiResponse = await client.SendAsync(message);
 
                 var apiContent = await apiResponse.Content.ReadAsStringAsync();
+
+                _logger.LogInformation(apiContent);
+
                 var apiResponseDto = JsonConvert.DeserializeObject<T>(apiContent);
                 return apiResponseDto;
 
@@ -69,6 +74,9 @@ namespace Mango.Web.Services
                     IsSuccess = false
                 };
                 var res = JsonConvert.SerializeObject(dto);
+
+                _logger.LogInformation(res);
+
                 var apiResponseDto = JsonConvert.DeserializeObject<T>(res);
                 return apiResponseDto;
             }

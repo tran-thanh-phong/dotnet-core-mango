@@ -1,9 +1,5 @@
 ﻿using Mango.MessageBus;
 using Mango.Services.ShoppingCartAPI.Models.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Mango.Services.ShoppingCartAPI.Messages
 {
@@ -11,7 +7,7 @@ namespace Mango.Services.ShoppingCartAPI.Messages
     {
         public int CartHeaderId { get; set; }
         public string UserId { get; set; }
-        public string CouponCode { get; set; }
+        public string? CouponCode { get; set; }
         public double OrderTotal { get; set; }
         public double DiscountTotal { get; set; }
         public string FirstName { get; set; }
@@ -23,6 +19,6 @@ namespace Mango.Services.ShoppingCartAPI.Messages
         public string CVV { get; set; }
         public string ExpiryMonthYear { get; set; }
         public int CartTotalItems { get; set; }
-        public IEnumerable<CartDetailsDto> CartDetails { get; set; }
+        public IEnumerable<CartDetailsDto> CartDetails { get; set; } = new List<CartDetailsDto>();
     }
 }

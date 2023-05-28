@@ -7,7 +7,7 @@ namespace Mango.Web.Services
     {
         private readonly IHttpClientFactory _clientFactory;
 
-        public CartService(IHttpClientFactory clientFactory) : base(clientFactory)
+        public CartService(IHttpClientFactory clientFactory, ILogger<CartService> logger) : base(clientFactory, logger)
         {
             _clientFactory = clientFactory;
         }
