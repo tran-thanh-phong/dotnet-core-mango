@@ -111,8 +111,14 @@ namespace Mango.Services.OrderAPI.Messaging
                 orderHeader.OrderDetails.Add(orderDetails);
             }
 
-            await _orderRepository.AddOrder(orderHeader);
-
+            try
+            {
+                await _orderRepository.AddOrder(orderHeader);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
 
             PaymentRequestMessage paymentRequestMessage = new()
             {
@@ -121,7 +127,8 @@ namespace Mango.Services.OrderAPI.Messaging
                 CVV = orderHeader.CVV,
                 ExpiryMonthYear = orderHeader.ExpiryMonthYear,
                 OrderId = orderHeader.OrderHeaderId,
-                OrderTotal = orderHeader.OrderTotal
+                OrderTotal = orderHeader.OrderTotal,
+                Email = orderHeader.Email
             };
 
             try
@@ -145,7 +152,6 @@ namespace Mango.Services.OrderAPI.Messaging
 
             await _orderRepository.UpdateOrderPaymentStatus(paymentResultMessage.OrderId, paymentResultMessage.Status);
             await args.CompleteMessageAsync(args.Message);
-
         }
     }
 }
