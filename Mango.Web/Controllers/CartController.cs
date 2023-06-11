@@ -123,12 +123,19 @@ namespace Mango.Web.Controllers
                     }
                 }
 
-                foreach (var detail in cartDto.CartDetails) {
+                foreach (var detail in cartDto.CartDetails)
+                {
                     cartDto.CartHeader.OrderTotal += (detail.Product.Price * detail.Count);
                 }
 
                 cartDto.CartHeader.OrderTotal -= cartDto.CartHeader.DiscountTotal;
             }
+            else
+            {
+                cartDto.CartHeader = new CartHeaderDto();
+                cartDto.CartDetails = new List<CartDetailsDto>();
+            }
+
             return cartDto;
         }
     }
